@@ -6,8 +6,8 @@ import { noteReducer } from "./reducers/noteReducer";
 import { todoReducer } from "./reducers/todoReducer";
 
 const result = combineReducers({
-  todos: todoReducer,
-  notes: noteReducer,
+  todoReducer,
+  noteReducer,
 });
 
 export const store = redux.createStore(result);
