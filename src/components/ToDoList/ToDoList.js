@@ -11,7 +11,7 @@ function ToDoList({ todos, onToggle }) {
               {todo.completed ? "Completed" : "Pending"}
             </span>
             <button
-              className="btn btn-warning"
+              className="btn-warning"
               onClick={() => {
                 onToggle(index);
               }}
