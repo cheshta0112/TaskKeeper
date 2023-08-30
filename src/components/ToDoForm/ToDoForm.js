@@ -23,6 +23,7 @@ function ToDoForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setTodoText("");
+    console.log("[LOG]: Todo-Add action Dispatched");
     dispatch(actions.add(todoText));
   };
 
