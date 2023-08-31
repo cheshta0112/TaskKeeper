@@ -22,7 +22,7 @@ function ToDoList() {
             <button
               className="btn-warning"
               onClick={() => {
-                console.log("[LOG]: Todo-Toggle action Dispatched");
+                // console.log("[LOG]: Todo-Toggle action Dispatched");
                 disptach(actions.toggle(index));
               }}
             >
