@@ -2,13 +2,31 @@ import { useSelector, useDispatch } from "react-redux";
 // import { toggleTodo } from "../../redux/actions/todoActions";
 import { actions } from "../../redux/reducers/todoReducer";
 import { todoSelector } from "../../redux/reducers/todoReducer";
+import { useEffect } from "react";
 
 import "./ToDoList.css";
 
 function ToDoList() {
   const todos = useSelector(todoSelector);
-  const disptach = useDispatch();
+  console.log(todos);
+  const dispatch = useDispatch();
   // const todos= store.getState().todos;
+
+  useEffect(() => {
+    fetch("https://todo-api-johi.onrender.com/api/todos/")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((parsedJson) => {
+        console.log(parsedJson);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
   return (
     <div className="container">
@@ -23,7 +41,7 @@ function ToDoList() {
               className="btn-warning"
               onClick={() => {
                 // console.log("[LOG]: Todo-Toggle action Dispatched");
-                disptach(actions.toggle(index));
+                dispatch(actions.toggle(index));
               }}
             >
               Toggle
