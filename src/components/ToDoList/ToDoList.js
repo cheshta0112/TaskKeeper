@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actions } from "../../redux/reducers/todoReducer";
 import { todoSelector } from "../../redux/reducers/todoReducer";
 import { useEffect } from "react";
+import axios from "axios";
 
 import "./ToDoList.css";
 
@@ -13,19 +14,22 @@ function ToDoList() {
   // const todos= store.getState().todos;
 
   useEffect(() => {
-    fetch("https://todo-api-johi.onrender.com/api/todos/")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
-      })
-      .then((parsedJson) => {
-        console.log(parsedJson);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    // fetch("https://todo-api-johi.onrender.com/api/todos/")
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       throw new Error("Network response was not ok");
+    //     }
+    //     return res.json();
+    //   })
+    //   .then((parsedJson) => {
+    //     console.log(parsedJson);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data:", error);
+    //   });
+    axios.get("https://todo-api-johi.onrender.com/api/todos/").then((res) => {
+      console.log(res.data);
+    });
   }, []);
 
   return (
