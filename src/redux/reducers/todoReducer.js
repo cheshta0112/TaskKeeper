@@ -1,12 +1,25 @@
-// import { ADD_TODO, TOGGLE_TODO } from "../actions/todoActions";
-const { createSlice } = require("@reduxjs/toolkit");
+import axios from "axios";
+
+const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 const initialState = {
-  todos: [
-    { text: "Go to Gym at 6", completed: false },
-    { text: "Study at 8", completed: true },
-  ],
+  todos: [],
 };
+
+export const getInitialState = createAsyncThunk(
+  "todo/getInitialState",
+  async (_, thunkAPI) => {
+    // async calls.
+    try {
+      const res = await axios.get(
+        "https://todo-api-johi.onrender.com/api/todos"
+      );
+      thunkAPI.dispatch(actions.setInitialState(res.data));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
 
 const todoSlice = createSlice({
   name: "todo",
