@@ -8,16 +8,19 @@ const initialState = {
 
 export const getInitialState = createAsyncThunk(
   "todo/getInitialState",
-  async (_, thunkAPI) => {
-    // async calls.
-    try {
-      const res = await axios.get(
-        "https://todo-api-johi.onrender.com/api/todos"
-      );
-      thunkAPI.dispatch(actions.setInitialState(res.data));
-    } catch (err) {
-      console.log(err);
-    }
+  // async (_, thunkAPI) => {
+  //   // async calls.
+  //   try {
+  //     const res = await axios.get(
+  //       "https://todo-api-johi.onrender.com/api/todos"
+  //     );
+  //     thunkAPI.dispatch(actions.setInitialState(res.data));
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+  () => {
+    return axios.get("https://todo-api-johi.onrender.com/api/todos");
   }
 );
 
@@ -28,8 +31,6 @@ const todoSlice = createSlice({
     setInitialState: (state, action) => {
       state.todos = [...action.payload];
     },
-
-    // this is add action
     add: (state, action) => {
       state.todos.push({
         text: action.payload,
@@ -45,36 +46,15 @@ const todoSlice = createSlice({
       });
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getInitialState.fulfilled, (state, action) => {
+      console.log("getInitialState is fulfilled");
+      console.log(action.payload.data);
+      state.todos = [...action.payload.data];
+    });
+  },
 });
 
 export const todoReducer = todoSlice.reducer;
 export const actions = todoSlice.actions;
 export const todoSelector = (state) => state.todoReducer.todos;
-
-// export function todoReducer(state = initialState, action) {
-//   switch (action.type) {
-//     case ADD_TODO:
-//       return {
-//         ...state,
-//         todos: [
-//           ...state.todos,
-//           {
-//             text: action.text,
-//             completed: false,
-//           },
-//         ],
-//       };
-//     case TOGGLE_TODO:
-//       return {
-//         ...state,
-//         todos: state.todos.map((todo, i) => {
-//           if (i === action.index) {
-//             todo.completed = !todo.completed;
-//           }
-//           return todo;
-//         }),
-//       };
-//     default:
-//       return state;
-//   }
-// }
